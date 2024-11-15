@@ -26,44 +26,61 @@ body {
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    max-width: 95vw;
-    margin: 20px auto;
+    width: 100%;
+    max-width: 600px;
+    margin: 10px;
     position: relative;
 }
 
 .screen-container {
     background-color: #000;
     border-radius: 10px;
-    padding: 20px;
+    padding: 15px;
     margin-bottom: 20px;
     display: flex;
-    position: relative;
+    flex-direction: column;
+    align-items: center;
 }
 
 .game-screen {
     background-color: var(--screen-color);
     border-radius: 5px;
     padding: 10px;
-    position: relative;
+    width: 100%;
+    max-width: 300px;
 }
 
 #gameCanvas {
     display: block;
+    width: 100%;
+    height: auto;
     background-color: var(--screen-color);
 }
 
 .info-panel {
-    margin-left: 20px;
+    margin-top: 15px;
     color: var(--screen-color);
     font-size: 1.2em;
     font-weight: bold;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.next-piece {
+    text-align: center;
+}
+
+#nextCanvas {
+    display: block;
+    margin: 5px auto;
 }
 
 .controls {
     display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    gap: 30px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
     padding: 10px;
 }
 
@@ -71,16 +88,16 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    width: 180px;
-    height: 180px;
+    width: min(180px, 50vw);
+    height: min(180px, 50vw);
     padding: 10px;
 }
 
 .d-pad button {
-    width: 54px;
-    height: 54px;
+    width: min(54px, 15vw);
+    height: min(54px, 15vw);
     padding: 0;
-    font-size: 24px;
+    font-size: min(24px, 6vw);
     background: linear-gradient(145deg, #4a4a4a, #3d3d3d);
     color: white;
     border: none;
@@ -107,13 +124,13 @@ body {
 .d-pad button::after {
     content: '';
     position: absolute;
-    width: 46px;
-    height: 46px;
+    width: 85%;
+    height: 85%;
     border-radius: 50%;
     background: linear-gradient(145deg, #444444, #4d4d4d);
     box-shadow: inset 1px 1px 3px rgba(255,255,255,0.1);
-    top: 4px;
-    left: 4px;
+    top: 7.5%;
+    left: 7.5%;
     z-index: 1;
 }
 
@@ -123,33 +140,22 @@ body {
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-#up { 
-    grid-column: 2;
-    grid-row: 1;
-}
-#left { 
-    grid-column: 1;
-    grid-row: 2;
-}
-#right { 
-    grid-column: 3;
-    grid-row: 2;
-}
-#down { 
-    grid-column: 2;
-    grid-row: 3;
-}
+#up { grid-column: 2; grid-row: 1; }
+#left { grid-column: 1; grid-row: 2; }
+#right { grid-column: 3; grid-row: 2; }
+#down { grid-column: 2; grid-row: 3; }
 
 .action-buttons {
     display: flex;
-    flex-direction: column;
     gap: 15px;
     padding: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .action-buttons button {
-    padding: 15px 30px;
-    font-size: 18px;
+    padding: 12px 25px;
+    font-size: min(18px, 4.5vw);
     background: linear-gradient(145deg, #4a4a4a, #3d3d3d);
     color: white;
     border: none;
@@ -195,18 +201,21 @@ body {
 
 .modal-content {
     background-color: white;
-    margin: 15% auto;
+    margin: 10vh auto;
     padding: 20px;
-    width: 80%;
+    width: 90%;
     max-width: 500px;
     border-radius: 10px;
     position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .ranking-tabs {
     display: flex;
     gap: 10px;
     margin: 15px 0;
+    flex-wrap: wrap;
 }
 
 .tab {
@@ -214,7 +223,7 @@ body {
     border: none;
     background-color: #eee;
     border-radius: 15px;
-    font-size: 16px;
+    font-size: min(16px, 4vw);
     transition: all 0.3s;
 }
 
@@ -230,6 +239,7 @@ body {
     background-color: #f5f5f5;
     margin: 5px 0;
     border-radius: 5px;
+    font-size: min(16px, 4vw);
 }
 
 .close-button {
@@ -241,6 +251,7 @@ body {
     font-size: 24px;
     cursor: pointer;
     color: #666;
+    padding: 5px 10px;
 }
 
 #showRanking {
@@ -252,25 +263,74 @@ body {
     color: white;
     border: none;
     border-radius: 15px;
-    font-size: 14px;
+    font-size: min(14px, 3.5vw);
 }
 
-@media (max-width: 480px) {
-    .game-console {
-        padding: 15px;
+@media (min-width: 768px) {
+    .controls {
+        flex-direction: row;
+        justify-content: space-around;
     }
     
     .screen-container {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .info-panel {
+        flex-direction: column;
+        margin-left: 20px;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .game-console {
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .screen-container {
+        flex: 0 0 auto;
+    }
+    
+    .controls {
+        flex: 1 0 auto;
+        justify-content: space-between;
+    }
+    
+    .d-pad {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+    .game-console {
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+    }
+    
+    .screen-container {
+        flex-direction: row;
         padding: 10px;
     }
     
-    .d-pad button {
-        padding: 15px;
-        font-size: 20px;
+    .controls {
+        flex-direction: row;
+        padding: 5px;
+    }
+    
+    .d-pad {
+        width: min(140px, 40vw);
+        height: min(140px, 40vw);
     }
     
     .action-buttons button {
-        padding: 12px 20px;
-        font-size: 16px;
+        padding: 8px 20px;
     }
 }

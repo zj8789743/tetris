@@ -6,12 +6,9 @@ class TetrisGame {
         this.nextCtx = this.nextCanvas.getContext('2d', { alpha: false });
         
         // 设置画布大小
-        this.canvas.width = 300;
-        this.canvas.height = 600;
-        this.nextCanvas.width = 100;
-        this.nextCanvas.height = 100;
+        this.setupCanvas();
         
-        this.blockSize = 30;
+        this.blockSize = this.canvas.width / 10; // 动态计算方块大小
         this.cols = 10;
         this.rows = 20;
         
@@ -29,8 +26,33 @@ class TetrisGame {
         this.dropCounter = 0;
         this.dropInterval = 1000;
         
+        // 添加窗口调整监听
+        window.addEventListener('resize', () => {
+            this.setupCanvas();
+            this.blockSize = this.canvas.width / 10;
+            this.draw();
+        });
+        
         this.initializeControls();
         this.initializeGame();
+    }
+
+    setupCanvas() {
+        // 获取父容器的宽度
+        const container = this.canvas.parentElement;
+        const containerWidth = container.clientWidth - 20; // 减去padding
+        
+        // 设置主画布
+        this.canvas.width = Math.min(300, containerWidth);
+        this.canvas.height = this.canvas.width * 2;
+        
+        // 设置预览画布
+        this.nextCanvas.width = Math.min(100, containerWidth / 3);
+        this.nextCanvas.height = this.nextCanvas.width;
+        
+        // 设置画布样式
+        this.ctx.imageSmoothingEnabled = false;
+        this.nextCtx.imageSmoothingEnabled = false;
     }
 
     initializeControls() {
