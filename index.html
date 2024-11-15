@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>复古俄罗斯方块</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-console">
+        <div class="screen-container">
+            <div class="game-screen">
+                <canvas id="gameCanvas"></canvas>
+            </div>
+            <div class="info-panel">
+                <div class="score">分数: <span id="score">0</span></div>
+                <div class="level">等级: <span id="level">1</span></div>
+                <div class="next-piece">下一个:</div>
+                <canvas id="nextCanvas"></canvas>
+            </div>
+        </div>
+        <div class="controls">
+            <div class="d-pad">
+                <button id="up"><span>↑</span></button>
+                <button id="left"><span>←</span></button>
+                <button id="right"><span>→</span></button>
+                <button id="down"><span>↓</span></button>
+            </div>
+            <div class="action-buttons">
+                <button id="rotate">旋转</button>
+                <button id="start">开始</button>
+                <button id="pause">暂停</button>
+            </div>
+        </div>
+        <div class="ranking-panel">
+            <button id="showRanking">排行榜</button>
+        </div>
+    </div>
+
+    <div id="rankingModal" class="modal">
+        <div class="modal-content">
+            <h2>排行榜</h2>
+            <div class="ranking-tabs">
+                <button class="tab active" data-days="0">今日</button>
+                <button class="tab" data-days="15">历史15天</button>
+            </div>
+            <div id="rankingList"></div>
+            <button class="close-button">关闭</button>
+        </div>
+    </div>
+
+    <script src="js/database.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
